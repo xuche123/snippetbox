@@ -7,8 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	_ "github.com/go-sql-driver/mysql"
 	"snippetbox.xuche.net/internal/models"
-	 _"github.com/go-sql-driver/mysql"
 )
 
 type application struct {
