@@ -1,11 +1,12 @@
 package main
 
 import (
-	"errors"	
+	"errors"
 	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
+
 	"snippetbox.xuche.net/internal/models"
 )
 
@@ -14,6 +15,16 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		app.errorLog.Printf("Path %s not found", r.URL.Path)
 		app.notFound(w)
 		return
+	}
+
+	snippets, err := app.snippets.Latest()
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+	
+	for _, snippet := range snippets {
+		fmt.Fprintf(w, "%+v\n", snippet)
 	}
 
 	files := []string{
